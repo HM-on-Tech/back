@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon"
   },
-  "keywords": [],           
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
