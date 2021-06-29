@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 
 const postRouter = require('./routes/post');
+const inputDataRouter = require('./routes/inputData')
+const messageRouter = require('./routes/message')
 const db = require('./models');
 
 dotenv.config();
@@ -32,7 +34,7 @@ app.use(session({
 
 
 app.get('/', (req, res) => {
-  console.log(res) 
+  console.log(res)
   res.send('hello express');
 });
 
@@ -40,13 +42,15 @@ app.delete('/', (req, res) => {
   console.log('--------')
   let first = req.body.PatientFirstName;
 
-  
-  res.json({'result':first});
+
+  res.json({ 'result': first });
 });
 
 
 
 app.use('/api/post', postRouter);
+app.use('/api/inputData', inputDataRouter)
+app.use('/api/message', messageRouter)
 
 app.listen(3065, () => {
   console.log('Server is running');
