@@ -26,8 +26,19 @@ router.post('/add', async (req, res, next) => {
 router.post('/list', async (req, res, next) => {  
   try {
     const result = await Post.findAll()
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 
-    res.status(200).json(result);
+
+router.post('/', async (req, res, next) => {  
+  try {
+    const blogId = req.body.blogId;
+    const result = await Post.findByPk(blogId)
+    return res.status(200).json(result);
   } catch (error) {
     console.error(error);
     next(error);
