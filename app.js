@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 
 const postRouter = require('./routes/post');
+const postsRouter = require('./routes/posts');
 const inputDataRouter = require('./routes/inputData')
 const messageRouter = require('./routes/message')
 const db = require('./models');
@@ -49,6 +50,7 @@ app.delete('/', (req, res) => {
 
 
 app.use('/api/post', postRouter);
+app.use('/api/posts', postsRouter);
 app.use('/api/inputData', inputDataRouter)
 app.use('/api/message', messageRouter)
 
