@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 
+const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
 const inputDataRouter = require('./routes/inputData')
@@ -49,6 +50,7 @@ app.delete('/', (req, res) => {
 
 
 
+app.use('/api/auth', authRouter);
 app.use('/api/post', postRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/inputData', inputDataRouter)
