@@ -8,11 +8,15 @@ module.exports = class User extends Model {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      googleAccessToken: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       password: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      idAdmin: {
+      isAdmin: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,

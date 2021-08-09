@@ -9,21 +9,33 @@ router.post('/', async (req, res, next) => {
   try {
     const { accessToken, name} = req.body;
 
+    let user = null;
+    const hashed = await bcrypt.hash(accessToken, 10);
 
-    const hashed = await bcrypt.hash(accessToken, 10)
-    const findUser = await User.findOrCreate({
+    const findUser = await User.findOne({
       where: {
           name: name,
-          password: hashed,
+          googleAccessToken: accessToken,
         }
       })
-    
-    const id = findUser[0].id
-    const isAdmin = findUser[0].isAdmin
-        
-    const token = jwt.sign(req.body, 'RS256');
+    // No user, sign up
+    if (findUser === null) { 
+      user = await User.create({
+        name: name,
+        password:hashed,
+        googleAccessToken: accessToken,
+        isAdmin: false,
+      })
+    } else {
+      user = findUser
+    }
 
-    return res.status(200).json({id, isAdmin, name,token});
+    const requestToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    res.cookie('token', requestToken, { expiresIn: '1d' });
+
+    const {id , isAdmin} = user
+
+    return res.status(200).json({'user': {id, isAdmin, name}, 'requestToken':requestToken});
   } catch (error) {
     console.error(error);
     next(error);
