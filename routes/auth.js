@@ -7,15 +7,15 @@ const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res, next) => {  
   try {
-    const { accessToken, name} = req.body;
+    const { googleId, name} = req.body;
 
     let user = null;
-    const hashed = await bcrypt.hash(accessToken, 10);
+    const hashed = await bcrypt.hash(googleId, 10);
 
     const findUser = await User.findOne({
       where: {
           name: name,
-          googleAccessToken: accessToken,
+          googleId: googleId,
         }
       })
     // No user, sign up
@@ -23,7 +23,7 @@ router.post('/', async (req, res, next) => {
       user = await User.create({
         name: name,
         password:hashed,
-        googleAccessToken: accessToken,
+        googleId: googleId,
         isAdmin: false,
       })
     } else {

@@ -8,7 +8,7 @@ module.exports = class User extends Model {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      googleAccessToken: {
+      googleId: {
         type: DataTypes.STRING,
         allowNull: false,
       },
