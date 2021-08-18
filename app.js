@@ -34,17 +34,15 @@ app.use(session({
   secret: 'COOKIE_SECRET',
 }));
 
-
+// GET : localhost:3000/
 app.get('/', (req, res) => {
   console.log(res)
-  res.send('hello express');
+  return res.send('hello express');
 });
 
 app.delete('/', (req, res) => {
   console.log('--------')
   let first = req.body.PatientFirstName;
-
-
   res.json({ 'result': first });
 });
 
