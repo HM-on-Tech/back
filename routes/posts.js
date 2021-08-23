@@ -36,15 +36,9 @@ router.post('/remove', async (req, res, next) => {
   try {
 
     const ids = req.body;
-
-    const result = await Post.destroy({ where: { id: ids }})
-    if (result === 1) {
-      // succ
-    const ids = req.body;
-      return res.status(200).json({data:'successfully deleted', id: ids});
-    }
-    return res.status(500).json({data: 'failed to delete'})
-    return res.json({result:'succ'})
+    await Post.destroy({ where: { id: ids }})
+    
+    return res.status(200).json({data:'successfully deleted', id: ids});
   } catch (error) {
     console.error(error);
     next(error);
