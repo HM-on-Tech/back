@@ -44,4 +44,12 @@ router.post('/', async (req, res, next) => {
     next(error);
   }
 });
+
+
+router.get('/edit/:edit', async (req, res, next) => {  
+  const editId = req.params.edit;
+  const result = await Post.findByPk(editId)
+  return res.status(200).json(result);
+});
+
 module.exports = router;
