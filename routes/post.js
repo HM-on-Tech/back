@@ -46,7 +46,8 @@ router.post('/', async (req, res, next) => {
 });
 
 
-router.get('/edit/:edit', async (req, res, next) => {  
+router.post('/edit/:edit', async (req, res, next) => {  
+  console.log('ajtioewjotawe')
   const editId = req.params.edit;
   const result = await Post.findByPk(editId)
   return res.status(200).json(result);
