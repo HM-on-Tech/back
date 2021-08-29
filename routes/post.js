@@ -46,11 +46,24 @@ router.post('/', async (req, res, next) => {
 });
 
 
-router.post('/edit/:edit', async (req, res, next) => {  
-  console.log('ajtioewjotawe')
+router.get('/get/:edit', async (req, res, next) => {  
   const editId = req.params.edit;
   const result = await Post.findByPk(editId)
   return res.status(200).json(result);
+});
+
+router.post('/edit/:edit', async (req, res, next) => {  
+  const editId = req.params.edit;
+  const { title, content} = req.body;
+
+  const result = await Post.update(
+    {title: title, content: content},
+    { where: { id: editId}}
+  )
+  if (result[0] == 1) {
+    return res.status(200).json({'result':'success'});
+  }
+  return res.status(500).json({'result':'failed'})
 });
 
 module.exports = router;
