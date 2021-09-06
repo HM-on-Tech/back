@@ -14,6 +14,7 @@ router.post('/add', async (req, res, next) => {
     const result = await Post.create({
         title: req.body.title,
         content: req.body.content,
+        author: req.body.author,
     })
 
     res.status(200).json({data: result});

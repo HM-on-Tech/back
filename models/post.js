@@ -9,6 +9,10 @@ module.exports = class Post extends Model {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      author: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       content: {
         type: DataTypes.TEXT,
         allowNull: false,

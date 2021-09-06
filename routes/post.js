@@ -14,6 +14,7 @@ router.post('/add', async (req, res, next) => {
     const result = await Post.create({
         title: req.body.title,
         content: req.body.content,
+        author: req.body.author,
     })
 
     res.status(200).json(result);
@@ -26,6 +27,7 @@ router.post('/add', async (req, res, next) => {
 router.post('/list', async (req, res, next) => {  
   try {
     const result = await Post.findAll()
+    console.log(result)
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -54,10 +56,10 @@ router.get('/get/:edit', async (req, res, next) => {
 
 router.post('/edit/:edit', async (req, res, next) => {  
   const editId = req.params.edit;
-  const { title, content} = req.body;
+  const { title, content, author} = req.body;
 
   const result = await Post.update(
-    {title: title, content: content},
+    {title: title, content: content, author: author,},
     { where: { id: editId}}
   )
   if (result[0] == 1) {
