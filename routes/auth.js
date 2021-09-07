@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res, next) => {  
   try {
-    const { googleId, name} = req.body;
+    const { googleId, name, organization} = req.body;
 
     let user = null;
     const hashed = await bcrypt.hash(googleId, 10);
@@ -24,6 +24,7 @@ router.post('/', async (req, res, next) => {
         name: name,
         password:hashed,
         googleId: googleId,
+        organization:organization,
         isAdmin: false,
       })
     } else {

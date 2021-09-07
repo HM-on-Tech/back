@@ -10,6 +10,8 @@ const db = {};
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 console.log("sequelize", sequelize)
 
+
+// making new tables
 db.Post = post;
 db.User = user;
 
@@ -17,7 +19,9 @@ Object.keys(db).forEach(modelName => {
   db[modelName].init(sequelize);
 });
 
+// creating associations
 Object.keys(db).forEach(modelName => {
+  console.log('modelname=============', db[modelName])
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }

@@ -20,13 +20,17 @@ module.exports = class User extends Model {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
-      }
+      },
+      organization: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     }, {
       charset: 'utf8mb4',
       sequelize,
     });
   }
   static associate(db) {
-
+    db.User.hasMany(db.Post)
   }
 };
