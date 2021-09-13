@@ -11,11 +11,9 @@ const router = express.Router();
 router.post('/add', async (req, res, next) => {  
   try {
     console.log('post add request on the server.')
-    const result = await Post.create({
-        title: req.body.title,
-        content: req.body.content,
-        author: req.body.author,
-    })
+    const result = await Post.create(
+        req.body
+)
 
     res.status(200).json(result);
   } catch (error) {
@@ -56,10 +54,10 @@ router.get('/get/:edit', async (req, res, next) => {
 
 router.post('/edit/:edit', async (req, res, next) => {  
   const editId = req.params.edit;
-  const { title, content, author} = req.body;
+  const { title, content, author, thumbnail} = req.body;
 
   const result = await Post.update(
-    {title: title, content: content, author: author,},
+    {title: title, content: content, author: author, thumbnail:thumbnail},
     { where: { id: editId}}
   )
   if (result[0] == 1) {
