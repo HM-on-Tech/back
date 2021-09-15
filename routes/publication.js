@@ -14,7 +14,6 @@ router.post('/add', async (req, res, next) => {
     const result = await Publication.create(
         req.body
 )
-
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -25,8 +24,20 @@ router.post('/add', async (req, res, next) => {
 router.post('/list', async (req, res, next) => {  
   try {
     const result = await Publication.findAll()
-    console.log(result)
     return res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.post('/remove', async (req, res, next) => {  
+  try {
+
+    const ids = req.body;
+    await Publication.destroy({ where: { id: ids }})
+    
+    return res.status(200).json({data:'successfully deleted', id: ids});
   } catch (error) {
     console.error(error);
     next(error);
