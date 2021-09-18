@@ -1,33 +1,36 @@
 const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
-module.exports = class Post extends Model {
+module.exports = class User extends Model {
   static init(sequelize) {
     return super.init({
-      // id is default
-      title: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      author: {
+      googleId: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      content: {
+      password: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      thumbnail: {
+      isAdmin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+      organization: {
         type: DataTypes.STRING,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     }, {
       charset: 'utf8mb4',
       sequelize,
     });
   }
   static associate(db) {
-    db.Post.belongsTo(db.User)
-    db.Post.belongsTo(db.Publication)
+    db.User.hasMany(db.Post)
   }
 };

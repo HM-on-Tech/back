@@ -1,5 +1,5 @@
 const express = require('express');
-const { Posts } = require('../models');
+const { Post } = require('../models');
 
 
 const router = express.Router();
@@ -14,9 +14,10 @@ router.post('/add', async (req, res, next) => {
     const result = await Post.create({
         title: req.body.title,
         content: req.body.content,
+        author: req.body.author,
     })
 
-    res.status(200).json(result);
+    res.status(200).json({data: result});
   } catch (error) {
     console.error(error);
     next(error);
@@ -27,6 +28,18 @@ router.post('/list', async (req, res, next) => {
   try {
     const result = await Post.findAll()
     return res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+router.post('/remove', async (req, res, next) => {  
+  try {
+
+    const ids = req.body;
+    await Post.destroy({ where: { id: ids }})
+    
+    return res.status(200).json({data:'successfully deleted', id: ids});
   } catch (error) {
     console.error(error);
     next(error);
