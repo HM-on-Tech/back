@@ -1,5 +1,5 @@
 const express = require('express');
-const { Post } = require('../models');
+const { Publication } = require('../models');
 
 
 const router = express.Router();
@@ -10,10 +10,12 @@ const router = express.Router();
  */
 router.post('/add', async (req, res, next) => {  
   try {
-    console.log('post add request on the server.')
-    const result = await Publication.create(
-        req.body
-)
+    const existPublication = await Publication.findOne({where: {name: req.body.name}})
+
+    if ( existPublication ) return res.json(null);
+
+    const result = await Publication.create(req.body)
+
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
