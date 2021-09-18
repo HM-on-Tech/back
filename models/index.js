@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const post = require('./post');
 const user = require('./user');
+const publication = require('./publication')
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
@@ -14,6 +15,7 @@ console.log("sequelize", sequelize)
 // making new tables
 db.Post = post;
 db.User = user;
+db.Publication = publication;
 
 Object.keys(db).forEach(modelName => {
   db[modelName].init(sequelize);
@@ -21,7 +23,6 @@ Object.keys(db).forEach(modelName => {
 
 // creating associations
 Object.keys(db).forEach(modelName => {
-  console.log('modelname=============', db[modelName])
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }

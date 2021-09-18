@@ -56,6 +56,7 @@ router.post('/edit/:edit', async (req, res, next) => {
   const editId = req.params.edit;
   const { title, content, author, thumbnail} = req.body;
 
+
   const result = await Post.update(
     {title: title, content: content, author: author, thumbnail:thumbnail},
     { where: { id: editId}}
