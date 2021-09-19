@@ -20,6 +20,10 @@ module.exports = class Post extends Model {
       thumbnail: {
         type: DataTypes.STRING,
         allowNull: false
+      },
+      viewCount : {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
       }
     }, {
       charset: 'utf8mb4',

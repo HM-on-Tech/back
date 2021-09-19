@@ -1,5 +1,5 @@
 const express = require('express');
-const { Post } = require('../models');
+const { Post, Publication } = require('../models');
 
 
 const router = express.Router();
@@ -51,6 +51,25 @@ router.post('/', async (req, res, next) => {
   try {
     const blogId = req.body.blogId;
     const result = await Post.findByPk(blogId)
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.post('/publication', async (req, res, next) => {  
+  try {
+    const name = req.body.name;
+    const result = await Publication.findOne({
+      where: {name:name},
+      include: {
+        model: Post,
+      }
+    })
+    console.log('--==-=-=-=-=-=-=-=')
+    console.log(result)
+
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
