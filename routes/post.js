@@ -11,6 +11,7 @@ const router = express.Router();
 router.post('/add', async (req, res, next) => {  
   try {
     console.log('post add request on the server.')
+    console.log(req.body)
     const result = await Post.create(
         req.body
 )
@@ -45,10 +46,14 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.get('/get/:article', async (req, res, next) => {  
+  const articleId = req.params.article;
+  // Get Article info
+  const result = await Post.findByPk(articleId)
 
-router.get('/get/:edit', async (req, res, next) => {  
-  const editId = req.params.edit;
-  const result = await Post.findByPk(editId)
+  // Database => ViewCount + 1
+  await Post.update({viewCount: result.viewCount + 1}, { where: {id: articleId} }); 
+
   return res.status(200).json(result);
 });
 
