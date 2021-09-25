@@ -11,6 +11,7 @@ const router = express.Router();
 router.post('/add', async (req, res, next) => {  
   try {
     console.log('post add request on the server.')
+    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
     console.log(req.body)
     const result = await Post.create(
         req.body

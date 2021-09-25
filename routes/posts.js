@@ -33,6 +33,17 @@ router.post('/list', async (req, res, next) => {
     next(error);
   }
 });
+router.post('/list/:userId', async (req, res, next) => {  
+  try {
+    const userId = req.params.userid
+    const result = await Post.findAll({where:{ UserId: userId}});
+    console.log(result)
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 router.post('/remove', async (req, res, next) => {  
   try {
 

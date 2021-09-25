@@ -4,16 +4,13 @@ const { Model } = DataTypes;
 module.exports = class User extends Model {
   static init(sequelize) {
     return super.init({
+      email: {
+        type:DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      googleId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.TEXT,
         allowNull: false,
       },
       isAdmin: {
