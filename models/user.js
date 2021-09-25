@@ -14,7 +14,7 @@ module.exports = class User extends Model {
         allowNull: false,
       },
       isAdmin: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.INTEGER,
         defaultValue: false,
         allowNull: false,
       },

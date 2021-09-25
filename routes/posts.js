@@ -35,9 +35,8 @@ router.post('/list', async (req, res, next) => {
 });
 router.post('/list/:userId', async (req, res, next) => {  
   try {
-    const userId = req.params.userid
-    const result = await Post.findAll({where:{ UserId: userId}});
-    console.log(result)
+    const userId = req.params.userId;
+    const result = await Post.findAll({where:{ userId: userId}});
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
