@@ -1,20 +1,17 @@
-exports.authMiddleware = (req, res, next) => {
-  const authUserId = req.user._id;
-  User.findById(authUserId).exec((err, user) => {
-      if (err || !user) {
-          return res.status(400).json({
-              error: 'User not found'
-          });
-      }
-      req.profile = user;
-      next();
-  });
+const { User } = require('../models');  
+const jwt = require('jsonwebtoken');
+
+exports.authMiddleware = async (req, res, next) => {
+
+  const jwtToken = req.headers.authorization;
+  const  payload = jwt.verify(jwtToken, process.env.JWT_SECRET);
+
+  const verifiedUser = await User.findOne({where: {id:payload.user.id, email:payload.user.email}});
+  req.user = verifiedUser;
+  next();
 };
 
 
-exports.requireSignin = expressJwt({
-  secret: process.env.JWT_SECRET // req.user
-});
 
 exports.signout = (req, res) => {
   res.clearCookie('token');

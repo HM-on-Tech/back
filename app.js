@@ -5,11 +5,10 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 
+const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
-const postRouter = require('./routes/post');
-const postsRouter = require('./routes/posts');
-const inputDataRouter = require('./routes/inputData')
-const messageRouter = require('./routes/message')
+const articleRouter = require('./routes/article');
+const articlesRouter = require('./routes/articles');
 const publicationRouter = require('./routes/publication')
 const db = require('./models');
 
@@ -41,19 +40,10 @@ app.get('/', (req, res) => {
   return res.send('hello express');
 });
 
-app.delete('/', (req, res) => {
-  console.log('--------')
-  let first = req.body.PatientFirstName;
-  res.json({ 'result': first });
-});
-
-
-
+app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/post', postRouter);
-app.use('/api/posts', postsRouter);
-app.use('/api/inputData', inputDataRouter)
-app.use('/api/message', messageRouter)
+app.use('/api/post', articleRouter);
+app.use('/api/posts', articlesRouter);
 app.use('/api/publication', publicationRouter)
 
 

@@ -13,13 +13,9 @@ module.exports = class User extends Model {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      isAdmin: {
+      role: {
         type: DataTypes.INTEGER,
         defaultValue: false,
-        allowNull: false,
-      },
-      organization: {
-        type: DataTypes.STRING,
         allowNull: false,
       },
     }, {
@@ -28,6 +24,7 @@ module.exports = class User extends Model {
     });
   }
   static associate(db) {
-    db.User.hasMany(db.Post)
+    db.User.hasMany(db.Article);
+    db.User.belongsToMany(db.Publication, {through: 'UserPublication' });
   }
 };

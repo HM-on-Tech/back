@@ -1,5 +1,5 @@
 const express = require('express');
-const { Post } = require('../models');
+const { Article, User } = require('../models');
 
 
 const router = express.Router();
@@ -10,13 +10,12 @@ const router = express.Router();
  */
 router.post('/add', async (req, res, next) => {  
   try {
-    console.log('post add request on the server.')
-    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-    console.log(req.body)
-    const result = await Post.create(
-        req.body
-)
+    const { PublicationId, UserId } = req.body;
+    const user = await User.findByPk(UserId)
+    if (!user) return res.status(401);
 
+    user.addPublications(PublicationId);
+    const result = await Article.create(req.body)
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -26,8 +25,7 @@ router.post('/add', async (req, res, next) => {
 
 router.post('/list', async (req, res, next) => {  
   try {
-    const result = await Post.findAll()
-    console.log(result)
+    const result = await Article.findAll()
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -38,8 +36,8 @@ router.post('/list', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {  
   try {
-    const blogId = req.body.blogId;
-    const result = await Post.findByPk(blogId)
+    const articleId = req.body.blogId;
+    const result = await Article.findByPk(articleId)
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -47,23 +45,23 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.get('/get/:article', async (req, res, next) => {  
-  const articleId = req.params.article;
+router.get('/get/:articleId', async (req, res, next) => {  
+  const articleId = req.params.articleId;
   // Get Article info
-  const result = await Post.findByPk(articleId)
+  const result = await Article.findByPk(articleId)
 
   // Database => ViewCount + 1
-  await Post.update({viewCount: result.viewCount + 1}, { where: {id: articleId} }); 
+  await Article.update({viewCount: result.viewCount + 1}, { where: {id: articleId} }); 
 
   return res.status(200).json(result);
 });
 
-router.post('/edit/:edit', async (req, res, next) => {  
-  const editId = req.params.edit;
+router.post('/edit/:editId', async (req, res, next) => {  
+  const editId = req.params.editId;
   const { title, content, author, thumbnail} = req.body;
 
 
-  const result = await Post.update(
+  const result = await Article.update(
     {title: title, content: content, author: author, thumbnail:thumbnail},
     { where: { id: editId}}
   )

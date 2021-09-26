@@ -15,6 +15,8 @@ module.exports = class Publication extends Model {
     });
   }
   static associate(db) {
-    db.Publication.hasMany(db.Post)
+    db.Publication.hasMany(db.Article);
+    
+    db.Publication.belongsToMany(db.User, {through: 'UserPublication' });
   }
 };

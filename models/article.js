@@ -1,7 +1,7 @@
 const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
-module.exports = class Post extends Model {
+module.exports = class Article extends Model {
   static init(sequelize) {
     return super.init({
       // id is default
@@ -31,7 +31,7 @@ module.exports = class Post extends Model {
     });
   }
   static associate(db) {
-    db.Post.belongsTo(db.User)
-    db.Post.belongsTo(db.Publication)
+    db.Article.belongsTo(db.User)
+    db.Article.belongsTo(db.Publication)
   }
 };
