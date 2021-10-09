@@ -58,11 +58,18 @@ router.get('/get/:articleId', async (req, res, next) => {
 
 router.post('/edit/:editId', async (req, res, next) => {  
   const editId = req.params.editId;
-  const { title, content, author, thumbnail} = req.body;
+  const { title, content, author, thumbnail, volume, issue} = req.body;
 
 
   const result = await Article.update(
-    {title: title, content: content, author: author, thumbnail:thumbnail},
+    {
+      title: title,
+      content: content,
+      author: author,
+      thumbnail:thumbnail,
+      volume: volume,
+      issue: issue,
+    },
     { where: { id: editId}}
   )
   if (result[0] == 1) {

@@ -24,6 +24,14 @@ module.exports = class Article extends Model {
       viewCount : {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+      },
+      volume : {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      issue : {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
       }
     }, {
       charset: 'utf8mb4',
