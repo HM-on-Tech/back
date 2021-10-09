@@ -19,7 +19,7 @@ module.exports = class Article extends Model {
       },
       thumbnail: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true,
       },
       viewCount : {
         type: DataTypes.INTEGER,

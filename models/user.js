@@ -14,9 +14,11 @@ module.exports = class User extends Model {
         allowNull: false,
       },
       role: {
-        type: DataTypes.INTEGER,
-        defaultValue: false,
+        type: DataTypes.ENUM({
+          values: ['editor', 'admin']
+        }),
         allowNull: false,
+        // 1: editor, 2: admin
       },
     }, {
       charset: 'utf8mb4',
