@@ -27,8 +27,6 @@ router.post('/', async (req, res, next) => {
 
 router.post('/me', authMiddleware, async (req, res, next) => {  
   try {
-    console.log('-----------------------=-=-=-=--==--=-=');
-    console.log(req.user,'?????')
     if (req.user) {
       return res.status(200).json(req.user);
     }

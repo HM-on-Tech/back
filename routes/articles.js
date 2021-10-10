@@ -26,7 +26,25 @@ router.post('/add', async (req, res, next) => {
 
 router.post('/list', async (req, res, next) => { 
   try {
-    const result = await Article.findAll()
+    const { howMany } = req.body;
+    const result = await Article.findAll({
+      limit: howMany,
+    })
+    console.log(result)
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+router.post('/scroll', async (req, res, next) => { 
+  try {
+    const { howMany, length } = req.body;
+    const result = await Article.findAll({
+      limit: howMany,
+      offset: length,
+    })
+    console.log(result)
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -72,12 +90,48 @@ router.post('/', async (req, res, next) => {
 
 router.post('/publication', async (req, res, next) => {  
   try {
-    const name = req.body.name;
+    const { pubName, howMany, issue, volume } = req.body;
+    let articleFilter = {}
+    if (issue != null && volume != null ) {
+      articleFilter = {
+        ...articleFilter,
+        issue: issue,
+        volume: volume,
+      }
+    }
+
     const result = await Publication.findOne({
-      where: {name:name},
+      where: {
+        name: pubName
+      },
       include: {
         model: Article,
-      }
+        where: articleFilter,
+        offset: 0,
+        limit: howMany,
+      },
+    })
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.post('/publication/scroll', async (req, res, next) => {  
+  try {
+    const { howMany, length, pubName } = req.body;
+    console.log({howMany, length})
+    const result = await Publication.findOne({
+      where: {
+        name: pubName,
+      },
+      include: {
+        model: Article,
+        offset: length,
+        limit: howMany,
+      },
+      
     })
     return res.status(200).json(result);
   } catch (error) {

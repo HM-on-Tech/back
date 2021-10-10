@@ -1,5 +1,5 @@
 const express = require('express');
-const { Publication } = require('../models');
+const { Publication, Article } = require('../models');
 
 
 const router = express.Router();
@@ -40,6 +40,34 @@ router.post('/remove', async (req, res, next) => {
     await Publication.destroy({ where: { id: ids }})
     
     return res.status(200).json({data:'successfully deleted', id: ids});
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.post('/volumeIssueComb', async (req, res, next) => {  
+  try {
+    const { pubName } = req.body;
+    const publicationId = await Publication.findOne({
+      where: {
+        name: pubName,
+      },
+    })
+
+    console.log(publicationId.id)
+
+
+    const result = await Article.findAll({
+      where: {
+        publicationId: publicationId.id
+      },
+      attributes: ['volume', 'issue'],
+      group: ['volume', 'issue']
+
+    })
+
+    return res.status(200).json(result);
   } catch (error) {
     console.error(error);
     next(error);
