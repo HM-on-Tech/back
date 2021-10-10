@@ -58,7 +58,7 @@ router.get('/get/:articleId', async (req, res, next) => {
 
 router.post('/edit/:editId', async (req, res, next) => {  
   const editId = req.params.editId;
-  const { title, content, author, thumbnail, volume, issue} = req.body;
+  const { title, content, author, thumbnail, volume, issue, PublicationId} = req.body;
 
 
   const result = await Article.update(
@@ -69,6 +69,7 @@ router.post('/edit/:editId', async (req, res, next) => {
       thumbnail:thumbnail,
       volume: volume,
       issue: issue,
+      PublicationId,
     },
     { where: { id: editId}}
   )
