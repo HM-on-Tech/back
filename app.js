@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 
@@ -27,12 +27,12 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser('COOKIE_SECRET'));
-app.use(session({
-  saveUninitialized: false,
-  resave: false,
-  secret: 'COOKIE_SECRET',
-}));
+// app.use(cookieParser('COOKIE_SECRET'));
+// app.use(session({
+//   saveUninitialized: false,
+//   resave: false,
+//   secret: 'COOKIE_SECRET',
+// }));
 
 // GET : localhost:3000/
 app.get('/', (req, res) => {
