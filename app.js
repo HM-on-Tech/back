@@ -4,7 +4,8 @@ const session = require('express-session');
 // const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
-
+const helmet = require('helmet');
+const hpp = require('hpp');
 const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
 const articleRouter = require('./routes/article');
@@ -27,6 +28,8 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(hpp());
 // app.use(cookieParser('COOKIE_SECRET'));
 // app.use(session({
 //   saveUninitialized: false,
@@ -37,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 // GET : localhost:3000/
 app.get('/', (req, res) => {
   console.log(res)
-  return res.send('hello express');
+  return res.send('I am Diane');
 });
 
 app.use('/api/user', userRouter);
