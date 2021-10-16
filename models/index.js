@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const post = require('./post');
+const article = require('./article');
 const user = require('./user');
 const publication = require('./publication')
 
@@ -13,7 +13,7 @@ console.log("sequelize", sequelize)
 
 
 // making new tables
-db.Post = post;
+db.Article = article;
 db.User = user;
 db.Publication = publication;
 
