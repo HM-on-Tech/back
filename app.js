@@ -14,6 +14,7 @@ const publicationRouter = require('./routes/publication')
 const db = require('./models');
 
 dotenv.config();
+const env = process.env.NODE_ENV || 'development';
 const app = express();
 db.sequelize.sync()
   .then(() => {
@@ -52,7 +53,12 @@ app.use('/api/post', articleRouter);
 app.use('/api/posts', articlesRouter);
 app.use('/api/publication', publicationRouter)
 
-
-app.listen(3065, () => {
-  console.log('Server is running');
-});
+if (env === 'production') {
+  app.listen(80, () => {
+    console.log('Server is running on port 80');
+  });
+} else {
+  app.listen(3065, () => {
+    console.log('Server is running on port 3065');
+  });
+}
