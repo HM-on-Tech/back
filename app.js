@@ -23,7 +23,10 @@ db.sequelize.sync()
 
 app.use(morgan('dev'));
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: [
+    'http://localhost:3000',
+    'http://hmontech.com',
+  ],
   credentials: true,
 }));
 app.use(express.json());
